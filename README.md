@@ -16,54 +16,48 @@ To write a program to predict the profit of a city using the linear regression m
 ## Program:
 ```
 import numpy as np
-import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
+import matplotlib.pyplot as plt
 
+# Generate synthetic data
+np.random.seed(42)
+X = 2 * np.random.rand(100, 1)
+y = 4 + 3 * X + np.random.randn(100, 1)  # y = 4 + 3x + noise
 
-# Suppose we have: CGPA, Aptitude Score, Communication Skill → Placement (1=Placed, 0=Not Placed)
-data = {
-    'CGPA': [8.5, 6.8, 7.9, 5.4, 9.1, 8.0, 7.5, 6.0, 9.3, 5.8],
-    'Aptitude_Score': [82, 55, 75, 48, 92, 77, 73, 50, 95, 45],
-    'Communication_Skill': [8, 6, 7, 5, 9, 8, 7, 6, 9, 5],
-    'Placed': [1, 0, 1, 0, 1, 1, 1, 0, 1, 0]
-}
+# Add bias term (x0 = 1) to each instance
+X_b = np.c_[np.ones((100, 1)), X]  # shape = (100, 2)
 
-df = pd.DataFrame(data)
-print("Dataset:\n", df, "\n")
+# Gradient Descent Function
+def gradient_descent(X, y, learning_rate=0.1, n_iterations=1000):
+    m = len(y)
+    theta = np.random.randn(2, 1)  # initialize weights randomly (2 because we have bias + 1 feature)
+    
+    for iteration in range(n_iterations):
+        gradients = 2/m * X.T.dot(X.dot(theta) - y)
+        theta = theta - learning_rate * gradients
+    return theta
 
-X = df[['CGPA', 'Aptitude_Score', 'Communication_Skill']]
-y = df['Placed']
+# Train the model
+theta_best = gradient_descent(X_b, y)
 
+# Output model parameters
+print(f"Learned parameters: intercept = {theta_best[0][0]:.4f}, slope = {theta_best[1][0]:.4f}")
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-
-
-model = LogisticRegression()
-model.fit(X_train, y_train)
-
-y_pred = model.predict(X_test)
-
-
-print("Confusion Matrix:\n", confusion_matrix(y_test, y_pred))
-print("\nClassification Report:\n", classification_report(y_test, y_pred))
-print("Accuracy:", accuracy_score(y_test, y_pred))
-
-
-new_student = np.array([[8.2, 78, 8]])  # CGPA, Aptitude, Communication
-prediction = model.predict(new_student)
-
-print("\nNew Student Prediction:")
-if prediction[0] == 1:
-    print(" The student is likely to be PLACED.")
-else:
-    print(" The student is NOT likely to be placed.")
+# Plotting
+plt.scatter(X, y, color='blue', label='Data')
+X_new = np.array([[0], [2]])
+X_new_b = np.c_[np.ones((2, 1)), X_new]
+y_predict = X_new_b.dot(theta_best)
+plt.plot(X_new, y_predict, color='red', label='Prediction')
+plt.xlabel("X")
+plt.ylabel("y")
+plt.title("Linear Regression using Gradient Descent")
+plt.legend()
+plt.grid(True)
+plt.show()
 ```
 
 ## Output:
-![linear regression using gradient descent](sam.png)
-[text](../OneDrive/Pictures/Screenshots)
+![alt text](<Screenshot 2025-10-07 001416.png>)
 
 ## Result:
 Thus the program to implement the linear regression using gradient descent is written and verified using python programming.
