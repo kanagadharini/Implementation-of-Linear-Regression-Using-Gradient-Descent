@@ -8,10 +8,21 @@ To write a program to predict the profit of a city using the linear regression m
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-1. 
-2. 
-3. 
-4. 
+1.Import necessary libraries (numpy, matplotlib)
+2.Generate synthetic data with a linear relationship and noise
+
+3.Add bias term to the input features
+
+4.Initialize model parameters randomly
+
+5.Define gradient descent function to update parameters iteratively
+
+6.Train the model using the gradient descent function
+
+7.Print learned parameters (intercept and slope)
+
+8.Visualize the results with a scatter plot and regression line 
+    
 
 ## Program:
 ```
@@ -57,7 +68,6 @@ plt.show()
 ```
 
 ## Output:
-![alt text](<Screenshot 2025-10-07 001416.png>)
-
-## Result:
+<img width="680" height="577" alt="Screenshot 2025-10-10 183012" src="https://github.com/user-attachments/assets/2babecab-ecc8-4602-a8b6-87bcdeea3dd5" />
+##result:
 Thus the program to implement the linear regression using gradient descent is written and verified using python programming.
